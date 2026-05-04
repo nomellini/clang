@@ -1,0 +1,68 @@
+.cache/
+.copilot/
+.dotnet/
+.local/
+.vscode-server/
+
+
+# Binários compilados
+*.o
+*.out
+*.exe
+a.out
+
+# Assembly gerado
+*.asm
+*.s
+
+# Arquivos de debug
+*.dSYM/
+*.su
+
+# Valgrind
+*.log
+massif.out.*
+
+# GDB
+.gdb_history
+
+# Editor - VS Code
+.vscode/
+*.code-workspace
+
+# Editor - vim/nano
+*.swp
+*.swo
+*~
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Executáveis sem extensão (Linux)
+# Adicione manualmente os nomes dos seus binários
+/hello
+/main
+
+
+# Configs pessoais do shell
+.bash_history
+.bash_logout
+.bashrc
+.profile
+.bash_logout
+.gitconfig
+.viminfo
+.lesshst
+.motd_shown
+.sudo_as_admin_successful
+
+# Arquivos intermediários de compilação
+*.i
+*.o
+a.out
+
+# Binários sem extensão
+hello
+guess
+test
