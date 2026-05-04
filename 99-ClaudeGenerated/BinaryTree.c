@@ -56,6 +56,15 @@ void inorderTraversal(Node *root) {
     inorderTraversal(root->right);
 }
 
+void reverseorderTraversal(Node *root) {
+    if (root == NULL) {
+        return;
+    }
+    reverseorderTraversal(root->right);
+    printf("%d ", root->value);
+    reverseorderTraversal(root->left);
+}
+
 /* Libera a memória de todos os nós da árvore. */
 void freeTree(Node *root) {
     if (root == NULL) {
@@ -68,7 +77,7 @@ void freeTree(Node *root) {
 
 int main(void) {
     Node *root = NULL;
-    int valores[] = {50, 30, 70, 20, 40, 60, 80};
+    int valores[] = {50, 30, 70, 20, 40, 60, 80, 1, 25, 35, 45, 55, 65, 75, 85, 2};
     int quantidade = sizeof(valores) / sizeof(valores[0]);
 
     printf("Inserindo valores na árvore binária de busca:\n");
@@ -80,6 +89,10 @@ int main(void) {
 
     printf("Valores em ordem (in-order traversal):\n");
     inorderTraversal(root);
+    printf("\n");
+
+    printf("Valores em ordem reversa (reverse-order traversal):\n");
+    reverseorderTraversal(root);
     printf("\n");
 
     freeTree(root);
