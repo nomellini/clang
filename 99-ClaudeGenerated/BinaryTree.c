@@ -44,6 +44,54 @@ Node *insert(Node *root, int value) {
 }
 
 /*
+ * Remove um valor da árvore binária de busca.
+ * Retorna a nova raiz da árvore após a remoção.
+ */
+Node *removeNode(Node *root, int value) {
+    if (root == NULL) {
+        return NULL;
+    }
+
+    if (value < root->value) {
+        root->left = removeNode(root->left, value);
+    } else if (value > root->value) {
+        root->right = removeNode(root->right, value);
+    } else {
+        /* Nó encontrado - três casos possíveis */
+
+        /* Caso 1: nó folha (sem filhos) */
+        if (root->left == NULL && root->right == NULL) {
+            free(root);
+            return NULL;
+        }
+
+        /* Caso 2: nó com apenas um filho */
+        if (root->left == NULL) {
+            Node *temp = root->right;
+            free(root);
+            return temp;
+        }
+        if (root->right == NULL) {
+            Node *temp = root->left;
+            free(root);
+            return temp;
+        }
+
+        /* Caso 3: nó com dois filhos */
+        /* Encontra o sucessor (menor valor na subárvore direita) */
+        Node *temp = root->right;
+        while (temp->left != NULL) {
+            temp = temp->left;
+        }
+        /* Copia o valor do sucessor para este nó */
+        root->value = temp->value;
+        /* Remove o sucessor da subárvore direita */
+        root->right = removeNode(root->right, temp->value);
+    }
+    return root;
+}
+
+/*
  * Impressão em ordem (left, root, right).
  * Para uma árvore binária de busca, este método exibe os valores ordenados.
  */
@@ -75,9 +123,22 @@ void freeTree(Node *root) {
     free(root);
 }
 
+Node *search(Node *root, int value) {
+    if (root == NULL || root->value == value) {
+        return root;
+    }
+    if (value < root->value) {
+        return search(root->left, value);
+    } else {
+        return search(root->right, value);
+    }
+}
+
+
+
 int main(void) {
     Node *root = NULL;
-    int valores[] = {50, 30, 70, 20, 40, 60, 80, 1, 25, 35, 45, 55, 65, 75, 85, 2};
+    int valores[] = {70,85,70,90,66, 7,42,18,5,41, 47,27,26,23,63, 58,4,67,33,91};
     int quantidade = sizeof(valores) / sizeof(valores[0]);
 
     printf("Inserindo valores na árvore binária de busca:\n");
@@ -93,6 +154,21 @@ int main(void) {
 
     printf("Valores em ordem reversa (reverse-order traversal):\n");
     reverseorderTraversal(root);
+    printf("\n");
+
+    int valorBusca = 403;
+    printf("\nBuscando valor %d na árvore...\n", valorBusca);
+    Node *resultadoBusca = search(root, valorBusca);
+    if (resultadoBusca != NULL) {
+        printf("Valor %d encontrado na árvore.\n", resultadoBusca->value);
+    } else {
+        printf("Valor %d não encontrado na árvore.\n", valorBusca);
+    }
+
+    printf("\nRemovendo valor 30 da árvore...\n");
+    root = removeNode(root, 30);
+    printf("Valores em ordem após remoção:\n");
+    inorderTraversal(root); 
     printf("\n");
 
     freeTree(root);
